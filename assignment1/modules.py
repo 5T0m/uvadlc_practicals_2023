@@ -50,6 +50,14 @@ class LinearModule(object):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
+        if input_layer == False:
+          self.params['weights']  = np.random.normal(0, np.sqrt(2/in_features), (in_features, out_features))
+        else:
+          self.params['weights']  = np.ones((in_features, out_features))
+        self.params['bias']       = np.zeros((in_features,))
+        
+        self.grads['weights']     = np.zeros((in_features,out_features))
+        self.grads['bias']        = np.zeros((in_features,))
 
         #######################
         # END OF YOUR CODE    #
@@ -73,7 +81,7 @@ class LinearModule(object):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
-
+        out = np.dot(x, self.params['weights']) + self.params['bias']
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -97,7 +105,9 @@ class LinearModule(object):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
-
+        dx = np.dot(dout, self.params['weight'].T)
+        self.grads['weight'] = np.dot(x.T, dout)
+        self.grads['bias'] = np.sum(dout, axis=0)
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -114,7 +124,8 @@ class LinearModule(object):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
-        pass
+        self.params = {'weight': None, 'bias': None} # Model parameters
+        self.grads = {'weight': None, 'bias': None} # Gradients
         #######################
         # END OF YOUR CODE    #
         #######################
